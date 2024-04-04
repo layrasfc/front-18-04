@@ -9,6 +9,13 @@ const styles = StyleSheet.create({
         gap: 10,
         backgroundColor: '#fff'
     },
+    campo: {
+        width: "60%",
+    },
+    pesquisar: {
+        width: '60%',
+
+    },
     title: {
         fontSize: 30,
         fontWeight: 700,
@@ -18,23 +25,16 @@ const styles = StyleSheet.create({
         fontSize: 20,
         fontWeight: 600,
         paddingBottom: 15,
+
     },
-    pesquisar: {
-        width: '60%',
-        paddingTop: 10,
-    },
-    campo: {
-        width: "60%",
-    },
-    ID: {
-        width: '20%',
+    input: {
         height: 30,
-        borderRadius: 10,
+        borderRadius: 5,
         borderWidth: 1,
-        paddingLeft: 10,
-        fontWeight: 'bold'
+        padding: 5,
+        borderColor: '#8a8a8a',
     },
-    
+
     resultado: {
         width: '100%',
         height: 30,
@@ -44,40 +44,22 @@ const styles = StyleSheet.create({
         padding: 5,
         borderColor: '#8a8a8a',
     },
-    input: {
-        height: 30,
-        borderRadius: 5,
-        borderWidth: 1,
-        padding: 5,
-        borderColor: '#8a8a8a',
-    },
     texto: {
         fontSize: 15,
         fontWeight: 500,
         padding: 2,
     },
-    btnPost: {
+    btn: {
         height: 30,
+        marginTop: 25,
         marginBottom: 10,
         borderWidth: 0,
-        backgroundColor: '#2b75ed',
+        backgroundColor: '#32a852',
         borderRadius: 5,
         alignItems: 'center',
         justifyContent: 'center',
     },
-    btnBuscar: {
-        height: 30,
-        marginBottom: 10,
-        marginTop: 15,
-        borderWidth: 1,
-        backgroundColor: '#000',
-        borderRadius: 5,
-        alignItems: 'center',
-        justifyContent: 'center',
-        fontSize: 15,
-        paddingHorizontal: 40,
 
-    },
 });
 
 export default styles

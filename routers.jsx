@@ -107,6 +107,30 @@ export default function Routers() {
     return (
         <NavigationContainer>
             <Pilha.Navigator>
+                
+            <Pilha.Screen
+                    name="Update"
+                    component={Update}
+                    options={{ headerShown: false }}
+                />
+            <Pilha.Screen
+                    name="Delete"
+                    component={Delete}
+                    options={{ headerShown: false }}
+                />
+
+            <Pilha.Screen
+                    name="Read"
+                    component={Read}
+                    options={{ headerShown: false }}
+                />
+
+
+            <Pilha.Screen
+                    name="Create"
+                    component={Create}
+                    options={{ headerShown: false }}
+                />
 
                 <Pilha.Screen
                     name="Data"
@@ -138,29 +162,10 @@ export default function Routers() {
                     options={{ headerShown: false }}
                 />
 
-                <Pilha.Screen
-                    name="Create"
-                    component={Create}
-                    options={{ headerShown: false }}
-                />
 
-                <Pilha.Screen
-                    name="Read"
-                    component={Read}
-                    options={{ headerShown: false }}
-                />
 
-                <Pilha.Screen
-                    name="Update"
-                    component={Update}
-                    options={{ headerShown: false }}
-                />
 
-                <Pilha.Screen
-                    name="Delete"
-                    component={Delete}
-                    options={{ headerShown: false }}
-                />
+
 
             </Pilha.Navigator>
         </NavigationContainer>
