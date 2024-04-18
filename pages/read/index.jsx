@@ -28,6 +28,7 @@ export default function Read() {
                 setUF(response.data.uf)
                 setCep(response.data.cep)
                 setEmail(response.data.email)
+                setNum(response.data.numero)
             })
     }
 
@@ -37,7 +38,7 @@ export default function Read() {
             <Text style={styles.title}>Read</Text>
 
             <View style={styles.pesquisar}>
-            <Text style={styles.subtitle}>Pesquisar pessoa</Text>
+            <Text style={styles.subtitle}>Pesquisar pessoa:</Text>
             <Text style={styles.texto}>ID:</Text>
             <TextInput
                 style={styles.input}
@@ -55,7 +56,7 @@ export default function Read() {
             </View>
 
             <View style={styles.campo}>
-            <Text style={styles.subtitle}>Resultado</Text>
+            <Text style={styles.subtitle}>Resultado:</Text>
             <Text style={styles.texto}>Nome:</Text>
             <Text style={styles.resultado}>{usuario}</Text>
             <Text style={styles.texto}>Cep:</Text>
@@ -68,6 +69,8 @@ export default function Read() {
             <Text style={styles.resultado}>{cidade}</Text>
             <Text style={styles.texto}>UF:</Text>
             <Text style={styles.resultado}>{uf}</Text>
+            <Text style={styles.texto}>Número:</Text>
+            <Text style={styles.resultado}>{num}</Text>
             <Text style={styles.texto}>Email:</Text>
             <Text style={styles.resultado}>{email}</Text>
             </View>

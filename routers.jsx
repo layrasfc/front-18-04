@@ -19,17 +19,15 @@ function MyTabs() {
         <Tab.Navigator
             screenOptions={{
                 tabBarStyle: {
-                    backgroundColor: 'black',
+                    backgroundColor: '#fafaf9',
                     paddingBottom: 1,
                     paddingTop: 1,
                     borderTopColor: 'transparent'
                 },
-                tabBarActiveTintColor: '#f0f',
+                tabBarActiveTintColor: '#6666ff',
                 tabBarInactiveTintColor: '#555'
-            }}
-
-        >
-            <Tab.Screen
+            }}>
+            {/* <Tab.Screen
                 name="SignIn"
                 component={SignIn}
                 options={{
@@ -38,42 +36,39 @@ function MyTabs() {
                     tabBarIcon: ({ size, color }) => (
                         <Feather name="user" size={size} color={color} />
                     )
-                }}
-            />
+                }}/> */}
             <Tab.Screen
                 name="Home"
                 component={Home}
                 options={{
-                    // headerShown:false,
+                    headerShown:false,
                     tabBarIcon: ({ size, color }) => (
                         <Feather name="home" size={size} color={color} />
                     )
-                }}
-            />
+                }}/>
             <Tab.Screen
                 name="Create"
                 component={Create}
                 options={{
-                    // headerShown:false,
+                    headerShown:false,
                     tabBarIcon: ({ size, color }) => (
                         <Feather name="folder-plus" size={size} color={color} />
                     )
-                }} />
+                }}/>
             <Tab.Screen
                 name="Read"
                 component={Read}
                 options={{
-                    // headerShown:false,
+                    headerShown:false,
                     tabBarIcon: ({ size, color }) => (
                         <Feather name="file" size={size} color={color} />
                     )
-                }}
-            />
+                }}/>
             <Tab.Screen
                 name="Update"
                 component={Update}
                 options={{
-                    // headerShown:false,
+                    headerShown:false,
                     tabBarIcon: ({ size, color }) => (
                         <Feather name="edit" size={size} color={color} />
                     )
@@ -83,20 +78,20 @@ function MyTabs() {
                 name="Delete"
                 component={Delete}
                 options={{
-                    // headerShown:false,
+                    headerShown:false,
                     tabBarIcon: ({ size, color }) => (
                         <Feather name="delete" size={size} color={color} />
                     )
                 }} />
-            <Tab.Screen
+            {/* <Tab.Screen
                 name="Data"
                 component={Data}
                 options={{
-                    // headerShown:false,
+                    headerShown:false,
                     tabBarIcon: ({ size, color }) => (
                         <Feather name="hard-drive" size={size} color={color} />
                     )
-                }} />
+                }} /> */}
         </Tab.Navigator>
     );
 }
@@ -107,66 +102,56 @@ export default function Routers() {
     return (
         <NavigationContainer>
             <Pilha.Navigator>
-                
             <Pilha.Screen
-                    name="Update"
-                    component={Update}
-                    options={{ headerShown: false }}
-                />
-            <Pilha.Screen
-                    name="Delete"
-                    component={Delete}
-                    options={{ headerShown: false }}
-                />
-
+                name="MyTabs"
+                component={MyTabs}
+                options={{ headerShown: false }}
+            />
             <Pilha.Screen
                     name="Read"
                     component={Read}
                     options={{ headerShown: false }}
-                />
+            />
+            <Pilha.Screen
+                    name="Delete"
+                    component={Delete}
+                    options={{ headerShown: false }}/>
+
+            <Pilha.Screen
+                name="Update"
+                component={Update}
+                options={{ headerShown: false }}/>   
 
 
             <Pilha.Screen
                     name="Create"
                     component={Create}
-                    options={{ headerShown: false }}
-                />
+                    options={{ headerShown: false }}/> 
 
-                <Pilha.Screen
-                    name="Data"
-                    component={Data}
-                    options={{ headerShown: false }}
-                />
-                <Pilha.Screen
-                    name="MyTabs"
-                    component={MyTabs}
-                    options={{ headerShown: false }}
-                />
+            <Pilha.Screen
+                name="Data"
+                component={Data}
+                options={{ headerShown: false }}
+            />
 
-                <Pilha.Screen
-                    name="SignIn"
-                    component={SignIn}
-                    options={{ headerShown: false }}
-                />
+            <Pilha.Screen
+                name="SignIn"
+                component={SignIn}
+                options={{ headerShown: false }}
+            />
 
 
-                <Pilha.Screen
-                    name="Home"
-                    component={Home}
-                    options={{ headerShown: false }}
-                />
+            <Pilha.Screen
+                name="Home"
+                component={Home}
+                options={{ headerShown: false }}
+            />
 
-                <Pilha.Screen
-                    name="SignUp"
-                    component={SignUp}
-                    options={{ headerShown: false }}
-                />
-
-
-
-
-
-
+            <Pilha.Screen
+                name="SignUp"
+                component={SignUp}
+                options={{ headerShown: false }}
+            />
             </Pilha.Navigator>
         </NavigationContainer>
     )

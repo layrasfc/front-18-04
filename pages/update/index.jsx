@@ -28,12 +28,23 @@ export default function Delete() {
                 setUF(response.data.uf)
                 setCep(response.data.cep)
                 setEmail(response.data.email)
+                setNum(response.data.numero)
             })
     }
 
     const update = () => {
-        axios.delete('http://127.0.0.1:8000/api/usuario/' + userId)
-        .then(()=> {
+        axios
+        .put('http://127.0.0.1:8000/api/usuario/' + userId, {
+            'nome': usuario,
+            'rua': rua,
+            'bairro': bairro,
+            'cidade': cidade,
+            'uf': uf,
+            'cep': cep,
+            'email': email,
+            'numero': num
+        }).then((response)=>{
+            console.log(response)
             setBairro('')
             setUsuario('')
             setRua('')
@@ -43,6 +54,8 @@ export default function Delete() {
             setEmail('')
             setNum('')
             setPassword('')
+        }).catch((error)=>{
+            console.log(error)
         })
     }
 
@@ -52,7 +65,7 @@ export default function Delete() {
             <Text style={styles.title}>Update</Text>
 
             <View style={styles.pesquisar}>
-            <Text style={styles.subtitle}>Pesquisar pessoa</Text>
+            <Text style={styles.subtitle}>Pesquisar pessoa:</Text>
             <Text style={styles.texto}>ID:</Text>
             <TextInput
                 style={styles.input}
@@ -73,21 +86,23 @@ export default function Delete() {
             <Text style={styles.subtitle}>Mude o quê deseja alterar:</Text>
             
             <Text style={styles.texto}>Nome:</Text>
-            <TextInput style={styles.resultado} value={usuario}/>
+            <TextInput style={styles.resultado} onChangeText={setUsuario} value={usuario}/>
             <Text style={styles.texto}>Cep:</Text>
-            <TextInput style={styles.resultado} value={cep}/>
+            <TextInput style={styles.resultado} onChangeText={setCep} value={cep}/>
             <Text style={styles.texto}>Rua:</Text>
-            <TextInput style={styles.resultado} value={rua}/>
+            <Text style={styles.resultado}>{rua}</Text>
             <Text style={styles.texto}>Bairro:</Text>
-            <TextInput style={styles.resultado} value={bairro}/>
+            <Text style={styles.resultado}>{bairro}</Text>
             <Text style={styles.texto}>Cidade:</Text>
-            <TextInput style={styles.resultado} value={cidade}/>
+            <Text style={styles.resultado}>{cidade}</Text>
             <Text style={styles.texto}>UF:</Text>
-            <TextInput style={styles.resultado} value={uf}/>
+            <Text style={styles.resultado}>{uf}</Text>
+            <Text style={styles.texto}>Número:</Text>
+            <TextInput style={styles.resultado} onChangeText={setNum} value={num}/>
             <Text style={styles.texto}>Email:</Text>
-            <TextInput style={styles.resultado} value={email}/>
+            <TextInput style={styles.resultado} onChangeText={setEmail} value={email}/>
             <Pressable style={styles.btnUpdate} onPress={update}>
-                    <Text style={{ fontWeight: 'bold', color: '#fff' }}>UPDATE</Text>
+                    <Text style={{ fontWeight: 'bold', color: '#fff' }}>PUT</Text>
             </Pressable>
             </View>
 

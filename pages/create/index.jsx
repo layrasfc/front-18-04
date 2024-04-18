@@ -25,7 +25,7 @@ export default function Create() {
             'uf': uf,
             'cep': cep,
             'email': email,
-            'numero': num
+            'numero': num,
         }).then((response)=>{
             console.log(response)
             setBairro('')
@@ -36,7 +36,6 @@ export default function Create() {
             setCep('')
             setEmail('')
             setNum('')
-            setPassword('')
         }).catch((error)=>{
             console.log(error)
         })
@@ -57,7 +56,7 @@ export default function Create() {
         <View style={styles.container}>
             <Text style={styles.title}>Create</Text>
             <View style={styles.campo}>
-            <Text style={styles.subtitle}>Insira os dados</Text>
+            <Text style={styles.subtitle}>Insira os dados:</Text>
             <Text style={styles.texto}>Nome:</Text>
             <TextInput
                 style={styles.input}
@@ -74,14 +73,10 @@ export default function Create() {
                     style={styles.btnBuscar}
                     onPress={buscar}
                 >
-                    <Text style={{ fontWeight: 'bold', color: '#fff' }}>Buscar</Text>
+                    <Text style={{ fontWeight: 'bold', color: '#fff' }}>Buscar endereço</Text>
                 </Pressable>
                 <Text style={styles.texto}>Rua:</Text>
-                <TextInput
-                    style={styles.resultado}
-                    onChangeText={setRua}
-                    value={rua}
-                />
+                <Text style={styles.resultado}>{rua}</Text>
                 <Text style={styles.texto}>Nº</Text>
                 <TextInput
                     style={styles.input}
@@ -89,24 +84,12 @@ export default function Create() {
                     value={num}
                 />
             <Text style={styles.texto}>Bairro:</Text>
-            <TextInput
-                style={styles.resultado}
-                onChangeText={setBairro}
-                value={bairro}
-            />
-                <Text style={styles.texto}>Cidade:</Text>
-                
-                <TextInput
-                    style={styles.resultado}
-                    onChangeText={setCidade}
-                    value={cidade}
-                />
-                <Text style={styles.texto}>UF:</Text>
-                <TextInput
-                    style={styles.resultado}
-                    onChangeText={setUF}
-                    value={uf}
-                />
+            <Text style={styles.resultado}>{bairro}</Text>
+            <Text style={styles.texto}>Cidade:</Text>
+            <Text style={styles.resultado}>{cidade}</Text>
+            <Text style={styles.texto}>UF:</Text>
+            <Text style={styles.resultado}>{uf}</Text>
+
             <Text style={styles.texto}>Email:</Text>
             <TextInput
                 style={styles.input}

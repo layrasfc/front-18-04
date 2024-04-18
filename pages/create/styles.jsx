@@ -58,7 +58,7 @@ const styles = StyleSheet.create({
     },
     btnPost: {
         height: 30,
-        marginBottom: 10,
+        marginTop: 10,
         borderWidth: 0,
         backgroundColor: '#2b75ed',
         borderRadius: 5,

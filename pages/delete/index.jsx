@@ -28,6 +28,7 @@ export default function Delete() {
                 setUF(response.data.uf)
                 setCep(response.data.cep)
                 setEmail(response.data.email)
+                setNum(response.data.numero)
             })
     }
 
@@ -42,7 +43,6 @@ export default function Delete() {
             setCep('')
             setEmail('')
             setNum('')
-            setPassword('')
         })
     }
 
@@ -52,7 +52,7 @@ export default function Delete() {
             <Text style={styles.title}>Delete</Text>
 
             <View style={styles.pesquisar}>
-            <Text style={styles.subtitle}>Pesquisar pessoa</Text>
+            <Text style={styles.subtitle}>Pesquisar pessoa:</Text>
             <Text style={styles.texto}>ID:</Text>
             <TextInput
                 style={styles.input}
@@ -70,7 +70,7 @@ export default function Delete() {
             </View>
 
             <View style={styles.campo}>
-            <Text style={styles.subtitle}>Resultado</Text>
+            <Text style={styles.subtitle}>Resultado:</Text>
             <Text style={styles.texto}>Nome:</Text>
             <Text style={styles.resultado}>{usuario}</Text>
             <Text style={styles.texto}>Cep:</Text>
@@ -83,6 +83,8 @@ export default function Delete() {
             <Text style={styles.resultado}>{cidade}</Text>
             <Text style={styles.texto}>UF:</Text>
             <Text style={styles.resultado}>{uf}</Text>
+            <Text style={styles.texto}>Número:</Text>
+            <Text style={styles.resultado}>{num}</Text>
             <Text style={styles.texto}>Email:</Text>
             <Text style={styles.resultado}>{email}</Text>
             <Pressable style={styles.btnDeletar} onPress={deletar}>

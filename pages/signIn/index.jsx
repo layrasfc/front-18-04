@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { View, Text, TextInput, Pre, Pressablessable } from 'react-native'
+import { View, Text, TextInput, Pre, Pressable } from 'react-native'
 import styles from './styles'
 
 export default function Login({ navigation }) {
@@ -9,16 +9,18 @@ export default function Login({ navigation }) {
     return (
         <View style={styles.container}>
             <View>
-                <Text style={styles.title}>Login</Text>
+                <Text style={styles.title}>Bem-vindo(a)!</Text>
             </View>
+
+            <View style={styles.input}>
             <TextInput
-                placeholder='email'
+                placeholder='Digite seu email'
                 onChangeText={setEmail}
                 value={email}
                 style={styles.caixa}
             />
             <TextInput
-                placeholder='password'
+                placeholder='Digite sua senha'
                 onChangeText={setPassword}
                 value={password}
                 style={styles.caixa}
@@ -29,15 +31,18 @@ export default function Login({ navigation }) {
                 style={styles.btnOk}
                 onPress={()=> navigation.navigate('Read')}
             >
-                <Text style={{ fontSize: 25 }}>Sign In</Text>
+                <Text  style={{color: 'white', fontWeight: 'bold'}}>Entrar</Text>
             </Pressable>
 
             <Pressable
                 style={styles.btnOk}
                 onPress={() => navigation.navigate('SignUp')}
             >
-                <Text style={{ fontSize: 25 }}>Sign Up</Text>
+                <Text style={{color: 'white', fontWeight: 'bold'}}>Cadastrar</Text>
             </Pressable>
+
+            </View>
+
 
         </View>
     )

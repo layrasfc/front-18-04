@@ -2,21 +2,22 @@ import {StyleSheet} from 'react-native'
 
 const styles = StyleSheet.create({
     container:{
-        backgroundColor:'#a7c1eb',
+        backgroundColor:'#fff',
         alignItems:'center',
         justifyContent:'center',
         flex:1,
+        gap: 15,
     },
     caixa:{
-        width:'80%',
-        borderWidth:1,
+        height: 30,
         borderRadius: 5,
-        padding:8,
-        fontSize:25,
-        marginTop:10,
+        backgroundColor: '#fff',
+        borderWidth: 1,
+        padding: 5,
+        borderColor: '#8a8a8a',
     },
     title:{
-        fontSize: 40,
+        fontSize: 25,
         fontWeight:'bold'
     },
     caixas:{
@@ -25,15 +26,19 @@ const styles = StyleSheet.create({
         padding:20,
     },
     btnOk:{
-        marginTop:20,
-        borderWidth:1,
-        borderRadius:10,
-        width:'50%',
-        height:50,
-        backgroundColor:'#5a7bb0',
-        alignItems:'center',
-        justifyContent:'center',
+        height: 30,
+        borderWidth: 0,
+        backgroundColor:'#6666ff', 
+        borderRadius: 5,
+        alignItems: 'center',
+        justifyContent: 'center',
+        padding: 11,
     },
+    input: {
+        flexDirection: 'column',
+        gap: 10,
+        width: '60%'
+    }
 })
 
 export default styles
