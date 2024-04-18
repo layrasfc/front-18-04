@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { StyleSheet, Text, View, TextInput, Pressable, Alert } from 'react-native';
 import styles from './styles';
+import AsyncStorage  from '@react-native-async-storage/async-storage'
 
 export default function Read() {
 
@@ -16,21 +17,47 @@ export default function Read() {
     const [email, setEmail] = useState('')
     const [num, setNum] = useState('')
     const [userAdd, setUserEmail] = useState('')
+    const [token, setToken] = useState('')
+
+    // useEffect: TEM UMA FUNÇÃO E UMA LISTA
+    // Executado em dois momentos, quando entra na tela e quando é chamado
+    useEffect(()=>{
+        // AsyncStorage: armazenamento interno do celular
+        AsyncStorage.getItem('token') // procurar o token
+        .then(tokenY =>{
+            if(tokenY){
+                setToken(tokenY)
+                console.log("Token de login:", tokenY)
+                console.log("Token sucesso!")
+            } else {
+                console.log("Token não encontrado")
+            }
+        }).catch((error)=>{
+            console.error("Erro: ", error)
+        })
+    }, [token]) 
 
     // Método GET
-    const get = () => {
-        axios.get('http://127.0.0.1:8000/api/usuario/' + userId)
-            .then((response) => {
-                setUsuario(response.data.nome)
-                setRua(response.data.rua)
-                setBairro(response.data.bairro)
-                setCidade(response.data.cidade)
-                setUF(response.data.uf)
-                setCep(response.data.cep)
-                setEmail(response.data.email)
-                setNum(response.data.numero)
+    const get = async () => {
+        try {
+            const response = await axios.get('http://127.0.0.1:8000/api/usuario/' + userId, {
+                headers: {
+                    Authorization: 'Bearer' + token
+                }
             })
+                    setUsuario(response.data.nome)
+                    setRua(response.data.rua)
+                    setBairro(response.data.bairro)
+                    setCidade(response.data.cidade)
+                    setUF(response.data.uf)
+                    setCep(response.data.cep)
+                    setEmail(response.data.email)
+                    setNum(response.data.numero)
+        } catch (error){
+            console.error("Erro: ", error)
+        }
     }
+
 
     return (
         <View style={styles.container}>

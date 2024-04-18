@@ -27,7 +27,7 @@ function MyTabs() {
                 tabBarActiveTintColor: '#6666ff',
                 tabBarInactiveTintColor: '#555'
             }}>
-            {/* <Tab.Screen
+            <Tab.Screen
                 name="SignIn"
                 component={SignIn}
                 options={{
@@ -36,7 +36,7 @@ function MyTabs() {
                     tabBarIcon: ({ size, color }) => (
                         <Feather name="user" size={size} color={color} />
                     )
-                }}/> */}
+                }}/>
             <Tab.Screen
                 name="Home"
                 component={Home}
