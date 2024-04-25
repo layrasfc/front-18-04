@@ -21,40 +21,35 @@ export default function Read() {
 
     // useEffect: TEM UMA FUNÇÃO E UMA LISTA
     // Executado em dois momentos, quando entra na tela e quando é chamado
-    useEffect(()=>{
-        // AsyncStorage: armazenamento interno do celular
-        AsyncStorage.getItem('token') // procurar o token
-        .then(tokenY =>{
-            if(tokenY){
-                setToken(tokenY)
-                console.log("Token de login:", tokenY)
-                console.log("Token sucesso!")
-            } else {
-                console.log("Token não encontrado")
-            }
-        }).catch((error)=>{
-            console.error("Erro: ", error)
-        })
-    }, [token]) 
+    useEffect(() => {
+        AsyncStorage.getItem('token')
+            .then((tokenY) => {
+                console.log('READ - Token de login: ', tokenY)
+                setToken(tokenY);
+            })
+            .catch(error => {
+                console.error('Erro ao recuperar token:', error);
+            });
+    }, []);
 
-    // Método GET
     const get = async () => {
         try {
             const response = await axios.get('http://127.0.0.1:8000/api/usuario/' + userId, {
                 headers: {
-                    Authorization: 'Bearer' + token
-                }
-            })
-                    setUsuario(response.data.nome)
-                    setRua(response.data.rua)
-                    setBairro(response.data.bairro)
-                    setCidade(response.data.cidade)
-                    setUF(response.data.uf)
-                    setCep(response.data.cep)
-                    setEmail(response.data.email)
-                    setNum(response.data.numero)
-        } catch (error){
-            console.error("Erro: ", error)
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+            setUsuario(response.data.nome)
+            setRua(response.data.rua)
+            setBairro(response.data.bairro)
+            setCidade(response.data.cidade)
+            setUF(response.data.uf)
+            setCep(response.data.cep)
+            setEmail(response.data.email)
+            setNum(response.data.numero)
+        }
+        catch (erro) {
+            console.error(erro);
         }
     }
 

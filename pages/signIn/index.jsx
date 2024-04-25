@@ -15,8 +15,7 @@ export default function Login({ navigation }) {
         .then(()=>{
             if(token !=null){
                 setToken(token)
-                console.log("Token de login:", token)
-                console.log("Token sucesso!")
+                console.log("SIGN IN - Token de login:", token)
             }
         }).catch((error)=>{
             console.error("Erro: ", error)

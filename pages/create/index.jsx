@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { StyleSheet, Text, View, TextInput, Pressable, Alert } from 'react-native';
 import styles from './styles';
 import { SectionList } from 'react-native-web';
+import AsyncStorage  from '@react-native-async-storage/async-storage'
 
 // 
 export default function Create() {
@@ -13,32 +14,55 @@ export default function Create() {
     const [uf, setUF] = useState('')
     const [cep, setCep] = useState('')
     const [email, setEmail] = useState('')
-    const [num, setNum] = useState('')
+    const [numero, setNumero] = useState('')
     const [pass, setPassword] = useState('')
 
-    const post = () => {
-        axios.post('http://127.0.0.1:8000/api/usuarios', {
-            'nome': usuario,
-            'rua': rua,
-            'bairro': bairro,
-            'cidade': cidade,
-            'uf': uf,
-            'cep': cep,
-            'email': email,
-            'numero': num,
-        }).then((response)=>{
-            console.log(response)
-            setBairro('')
-            setUsuario('')
-            setRua('')
-            setCidade('')
-            setUF('')
-            setCep('')
-            setEmail('')
-            setNum('')
-        }).catch((error)=>{
-            console.log(error)
-        })
+    const [token, setToken] = useState('')
+
+    // useEffect: TEM UMA FUNÇÃO E UMA LISTA
+    // Executado em dois momentos, quando entra na tela e quando é chamado
+    useEffect(() => {
+        AsyncStorage.getItem('token')
+            .then((tokenY) => {
+                setToken(tokenY);
+                console.log('CREATE - Token de login: ', tokenY)
+                
+            })
+            .catch(error => {
+                console.error('Erro ao recuperar token:', error);
+            });
+    }, []);
+
+    const dados = {
+        'nome': usuario,
+        'rua': rua,
+        'bairro': bairro,
+        'cidade': cidade,
+        'uf': uf,
+        'cep': cep,
+        'email': email,
+        'numero': numero,
+    }
+
+    const criar = async (dados, token) => {
+        try {
+             const response = await axios.post('http://127.0.0.1:8000/api/usuarios', dados, {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },  
+            })
+                setBairro('')
+                setUsuario('')
+                setRua('')
+                setCidade('')
+                setUF('')
+                setCep('')
+                setEmail('')
+                setNumero('')
+            }
+        catch(erro){
+            console.log(erro)
+        }
     }
 
     const buscar = () => {
@@ -48,7 +72,7 @@ export default function Create() {
                 setBairro(response.data.bairro)
                 setCidade(response.data.localidade)
                 setUF(response.data.uf)
-                setNum(response.data.numero)
+                setNumero(response.data.numero)
             })
     }
 
@@ -80,8 +104,8 @@ export default function Create() {
                 <Text style={styles.texto}>Nº</Text>
                 <TextInput
                     style={styles.input}
-                    onChangeText={setNum}
-                    value={num}
+                    onChangeText={setNumero}
+                    value={numero}
                 />
             <Text style={styles.texto}>Bairro:</Text>
             <Text style={styles.resultado}>{bairro}</Text>
@@ -108,7 +132,7 @@ export default function Create() {
             />
             <Pressable
                     style={styles.btnPost}
-                    onPress={post}
+                    onPress={()=>criar(dados, token)}
                 >
                     <Text style={{ fontWeight: 'bold', color: '#fff' }}>POST</Text>
                 </Pressable>

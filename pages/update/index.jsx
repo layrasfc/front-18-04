@@ -1,7 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { StyleSheet, Text, View, TextInput, Pressable, Alert, CheckBox } from 'react-native';
 import styles from './styles';
+import AsyncStorage  from '@react-native-async-storage/async-storage';
+
 
 export default function Delete() {
 
@@ -16,47 +18,74 @@ export default function Delete() {
     const [email, setEmail] = useState('')
     const [num, setNum] = useState('')
     const [userAdd, setUserEmail] = useState('')
+    const [token, setToken] = useState('')
 
-    // Método GET
-    const get = () => {
-        axios.get('http://127.0.0.1:8000/api/usuario/' + userId)
-            .then((response) => {
-                setUsuario(response.data.nome)
-                setRua(response.data.rua)
-                setBairro(response.data.bairro)
-                setCidade(response.data.cidade)
-                setUF(response.data.uf)
-                setCep(response.data.cep)
-                setEmail(response.data.email)
-                setNum(response.data.numero)
+    // useEffect: TEM UMA FUNÇÃO E UMA LISTA
+    // Executado em dois momentos, quando entra na tela e quando é chamado
+    useEffect(() => {
+        AsyncStorage.getItem('token')
+            .then((tokenY) => {
+                setToken(tokenY);
+                console.log('UPDATE - Token de login: ', tokenY)
+                
             })
+            .catch(error => {
+                console.error('Erro ao recuperar token:', error);
+            });
+    }, []);
+
+    const dados = {
+        'nome': usuario,
+        'rua': rua,
+        'bairro': bairro,
+        'cidade': cidade,
+        'uf': uf,
+        'cep': cep,
+        'email': email,
+        'numero': num,
     }
 
-    const update = () => {
-        axios
-        .put('http://127.0.0.1:8000/api/usuario/' + userId, {
-            'nome': usuario,
-            'rua': rua,
-            'bairro': bairro,
-            'cidade': cidade,
-            'uf': uf,
-            'cep': cep,
-            'email': email,
-            'numero': num
-        }).then((response)=>{
-            console.log(response)
-            setBairro('')
-            setUsuario('')
-            setRua('')
-            setCidade('')
-            setUF('')
-            setCep('')
-            setEmail('')
-            setNum('')
-            setPassword('')
-        }).catch((error)=>{
-            console.log(error)
-        })
+    const update = async (dados, token) => {
+        try {
+             const response = await axios.put('http://127.0.0.1:8000/api/usuario/' + userId, dados, {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },  
+            })
+                setBairro('')
+                setUsuario('')
+                setRua('')
+                setCidade('')
+                setUF('')
+                setCep('')
+                setEmail('')
+                setNum('')
+            }
+        catch(erro){
+            console.log(erro)
+        }
+    }
+
+    // Método GET
+    const get = async () => {
+        try {
+            const response = await axios.get('http://127.0.0.1:8000/api/usuario/' + userId, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+            setUsuario(response.data.nome)
+            setRua(response.data.rua)
+            setBairro(response.data.bairro)
+            setCidade(response.data.cidade)
+            setUF(response.data.uf)
+            setCep(response.data.cep)
+            setEmail(response.data.email)
+            setNum(response.data.numero)
+        }
+        catch (erro) {
+            console.error(erro);
+        }
     }
 
     return (
@@ -101,7 +130,7 @@ export default function Delete() {
             <TextInput style={styles.resultado} onChangeText={setNum} value={num}/>
             <Text style={styles.texto}>Email:</Text>
             <TextInput style={styles.resultado} onChangeText={setEmail} value={email}/>
-            <Pressable style={styles.btnUpdate} onPress={update}>
+            <Pressable style={styles.btnUpdate} onPress={()=>update(dados, token)}>
                     <Text style={{ fontWeight: 'bold', color: '#fff' }}>PUT</Text>
             </Pressable>
             </View>

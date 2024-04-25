@@ -1,7 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { StyleSheet, Text, View, TextInput, Pressable, Alert } from 'react-native';
 import styles from './styles';
+import AsyncStorage  from '@react-native-async-storage/async-storage';
+
 
 export default function Delete() {
 
@@ -17,24 +19,52 @@ export default function Delete() {
     const [num, setNum] = useState('')
     const [userAdd, setUserEmail] = useState('')
 
-    // Método GET
-    const get = () => {
-        axios.get('http://127.0.0.1:8000/api/usuario/' + userId)
-            .then((response) => {
-                setUsuario(response.data.nome)
-                setRua(response.data.rua)
-                setBairro(response.data.bairro)
-                setCidade(response.data.cidade)
-                setUF(response.data.uf)
-                setCep(response.data.cep)
-                setEmail(response.data.email)
-                setNum(response.data.numero)
+    const [token, setToken] = useState('')
+
+    // useEffect: TEM UMA FUNÇÃO E UMA LISTA
+    // Executado em dois momentos, quando entra na tela e quando é chamado
+    useEffect(() => {
+        AsyncStorage.getItem('token')
+            .then((tokenY) => {
+                setToken(tokenY);
+                console.log('DELETE - Token de login: ', tokenY)
+                
             })
+            .catch(error => {
+                console.error('Erro ao recuperar token:', error);
+            });
+    }, []);
+
+
+    // Método GET
+    const get = async () => {
+        try {
+            const response = await axios.get('http://127.0.0.1:8000/api/usuario/' + userId, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+            setUsuario(response.data.nome)
+            setRua(response.data.rua)
+            setBairro(response.data.bairro)
+            setCidade(response.data.cidade)
+            setUF(response.data.uf)
+            setCep(response.data.cep)
+            setEmail(response.data.email)
+            setNum(response.data.numero)
+        }
+        catch (erro) {
+            console.error(erro);
+        }
     }
 
-    const deletar = () => {
-        axios.delete('http://127.0.0.1:8000/api/usuario/' + userId)
-        .then(()=> {
+    const deletar = async(token) => {
+        try {
+            const response = await axios.delete('http://127.0.0.1:8000/api/usuario/' + userId, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            })
             setBairro('')
             setUsuario('')
             setRua('')
@@ -43,7 +73,11 @@ export default function Delete() {
             setCep('')
             setEmail('')
             setNum('')
-        })
+            }
+        catch (erro){
+            console.log(erro)
+        }
+
     }
 
     return (
@@ -87,7 +121,7 @@ export default function Delete() {
             <Text style={styles.resultado}>{num}</Text>
             <Text style={styles.texto}>Email:</Text>
             <Text style={styles.resultado}>{email}</Text>
-            <Pressable style={styles.btnDeletar} onPress={deletar}>
+            <Pressable style={styles.btnDeletar} onPress={()=>deletar(token)}>
                     <Text style={{ fontWeight: 'bold', color: '#fff' }}>DELETE</Text>
             </Pressable>
             </View>
