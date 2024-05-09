@@ -27,6 +27,7 @@ function MyTabs() {
                 tabBarActiveTintColor: '#6666ff',
                 tabBarInactiveTintColor: '#555'
             }}>
+                
             <Tab.Screen
                 name="SignIn"
                 component={SignIn}
@@ -37,15 +38,17 @@ function MyTabs() {
                         <Feather name="user" size={size} color={color} />
                     )
                 }}/>
-            <Tab.Screen
-                name="Home"
-                component={Home}
+                <Tab.Screen
+                name="SignUp"
+                component={SignUp}
                 options={{
-                    headerShown:false,
+                    headerShown: false,
+                    tabBarStyle: { display: 'none' },
                     tabBarIcon: ({ size, color }) => (
-                        <Feather name="home" size={size} color={color} />
+                        <Feather name="user" size={size} color={color} />
                     )
                 }}/>
+
             <Tab.Screen
                 name="Create"
                 component={Create}
@@ -131,8 +134,7 @@ export default function Routers() {
             <Pilha.Screen
                 name="Data"
                 component={Data}
-                options={{ headerShown: false }}
-            />
+                options={{ headerShown: false }}/>
 
             <Pilha.Screen
                 name="SignIn"
@@ -146,12 +148,12 @@ export default function Routers() {
                 component={Home}
                 options={{ headerShown: false }}
             />
-
+{/* 
             <Pilha.Screen
                 name="SignUp"
                 component={SignUp}
                 options={{ headerShown: false }}
-            />
+            /> */}
             </Pilha.Navigator>
         </NavigationContainer>
     )

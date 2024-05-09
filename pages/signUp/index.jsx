@@ -1,119 +1,85 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { View, Text, Pressable, TextInput } from 'react-native'
 import { FontAwesome, AntDesign } from "@expo/vector-icons"
 import styles from './styles'
 import axios from 'axios'
+import AsyncStorage  from '@react-native-async-storage/async-storage'
 
 export default function SignUp({navigation}) {
-    const [nome, setNome] = useState('')
-    const [cep, setCep] = useState('')
-    const [email, setEmail] = useState('')
-    const [num, setNum] = useState('')
+    const [user, setUser] = useState('')
     const [password, setPassword] = useState('')
-    const [logradouro, setLogradouro] = useState('')
-    const [localidade, setLocalidade] = useState('')
-    const [bairro, setBairro] = useState('')
-    const [uf, setUf] = useState('')
+    const [erro, setErro] = useState(null)
+    const [token, setToken] = useState(null)
 
+    useEffect( ()=>{
+        // AsyncStorage: armazenamento interno do celular
+        AsyncStorage.setItem('token', token) // procurar o token
+        .then(()=>{
+            if(token !=null){
+                setToken(token)
+                console.log("SIGN IN - Token de login:", token)
+            }
+        }).catch((error)=>{
+            console.error("Erro: ", error)
+        })
+    }, [token]) 
+
+    const createUser =  async()=>{
+        try{
+            const response = await axios.post(
+                'http://127.0.0.1:8000/create_user/', {
+                    username: user,
+                    password: password
+                }
+            )
+
+            const resp = await axios.post(
+                'http://127.0.0.1:8000/token/', {
+                    username: user,
+                    password: password
+                }
+            ) // await esperar até encontrar
+            setToken(resp.data.access)
+            navigation.navigate('Read')
+        } catch(error){
+            console.error("Deu erro: ", error)
+        }
+    }
 
     return (
         <View style={styles.container}>
             <View>
-                <Text style={styles.title}>Cadastrar</Text>
-            </View>
-            {/* <View style={styles.foto}>
-            {image && (
-                <>
-                    <Image source={{ uri: image }} style={styles.foto1} />
-                </>
-            )}
-            {Image && <ActivityIndicator />}
-        </View> */}
-            <View style={styles.botoes}>
-                <Pressable
-                //onPress={gallery}
-                >
-                    <FontAwesome
-                        name='image'
-                        size={40}
-                        color={'#000'}
-                    />
-                </Pressable>
-                <Pressable
-                //onPress={camera}
-                >
-                    <AntDesign
-                        name='camera'
-                        size={40}
-                        color={'#000'}
-                    />
-                </Pressable>
+                <Text style={styles.title}>Cadastre-se</Text>
             </View>
 
+            <View style={styles.input}>
             <TextInput
-                placeholder='nome'
-                onChangeText={(e) => { setNome(e) }}
-                value={nome}
-                style={styles.caixa}
-            />
-            <View style={styles.cx}>
-                <TextInput
-                    placeholder='cep'
-                    onChangeText={(e) => { setCep(e) }}
-                    value={cep}
-                    style={styles.caixaCEP}
-                />
-                <Pressable
-                    onPress={pesquisar}
-                    style={styles.btnPesquisar}
-                >
-                    <AntDesign
-                        name='search1'
-                        size={30}
-                        color={'#000'}
-                    />
-                </Pressable>
-            </View>
-
-            <View style={styles.cx}>
-                <Text style={styles.caixaCidade}>{logradouro}</Text>
-                <TextInput
-                    placeholder='nº'
-                    onChangeText={(e) => setNum(e)}
-                    value={num}
-                    style={styles.caixaNum}
-                />
-            </View>
-
-            <Text style={styles.caixaX}>{bairro}</Text>
-
-            <View style={styles.cx}>
-                <Text style={styles.caixaCidade}>{localidade}</Text>
-                <Text style={styles.caixaUF}>{uf}</Text>
-            </View>
-
-            <TextInput
-                placeholder='email'
-                onChangeText={(e) => setEmail(e)}
-                value={email}
+                placeholder='Digite seu usuario...'
+                placeholderTextColor="#8c8c8c" 
+                onChangeText={setUser}
+                value={user}
                 style={styles.caixa}
             />
             <TextInput
-                placeholder='password'
-                onChangeText={(e) => setPassword(e)}
+                placeholder='Digite sua senha...'
+                placeholderTextColor="#8c8c8c" 
+                onChangeText={setPassword}
                 value={password}
                 style={styles.caixa}
                 secureTextEntry={true}
             />
 
+
             <Pressable
                 style={styles.btnOk}
-                onPress={signup}
+                onPress={createUser}
             >
-                <Text style={{ fontSize: 25 }}>Ok</Text>
+                <Text style={{color: 'white', fontWeight: 'bold'}}>Cadastrar</Text>
             </Pressable>
+
+            </View>
+
 
         </View>
     )
 }
-
